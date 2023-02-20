@@ -1,0 +1,7 @@
+FROM basecontainer
+COPY ./custom-entrypoint.sh /custom-entrypoint.sh
+
+
+RUN chmod 777 ./custom-entrypoint.sh
+WORKDIR /
+ENTRYPOINT [ "/custom-entrypoint.sh" ]

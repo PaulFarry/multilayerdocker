@@ -1,0 +1,21 @@
+#FROM alpine
+FROM debian:stable
+
+ARG GF_UID="472"
+ARG GF_GID="472"
+
+ENV PATH=/usr/share/grafana/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin 
+
+RUN groupadd -r -g $GF_GID grafana && \
+    useradd -r -u $GF_UID -g grafana grafana
+
+
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod 777 ./docker-entrypoint.sh
+
+##Assume that above is the full grafana container configuration
+##Sample ^^^ from the https://github.com/GoogleCloudPlatform/grafana-docker/blob/master/7/debian9/7.4/Dockerfile
+
+
+WORKDIR /
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
